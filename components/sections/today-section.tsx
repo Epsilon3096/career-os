@@ -2,16 +2,16 @@
 
 import {
   ArrowRight,
-  ArrowUpRight,
   Check,
   Compass,
   MapPin,
   SlidersHorizontal,
-  TrendingUp,
+  Unlock,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { SignalBadge } from '@/components/career/signal-badge'
+import { SdgBadge } from '@/components/career/sdg-badge'
 import {
   CircularProgress,
   JourneyBar,
@@ -123,46 +123,6 @@ const roles = [
   },
 ]
 
-// 60-day momentum sparkline (normalized 0–100, upward trend)
-const momentumPoints = [22, 26, 24, 30, 34, 32, 38, 41, 40, 46, 52, 50, 57, 63]
-
-function MomentumSparkline() {
-  const w = 220
-  const h = 56
-  const min = Math.min(...momentumPoints) - 4
-  const max = Math.max(...momentumPoints) + 4
-  const step = w / (momentumPoints.length - 1)
-  const points = momentumPoints
-    .map(
-      (p, i) =>
-        `${(i * step).toFixed(1)},${(h - ((p - min) / (max - min)) * h).toFixed(1)}`,
-    )
-    .join(' ')
-
-  return (
-    <svg
-      viewBox={`0 0 ${w} ${h}`}
-      className="h-14 w-full"
-      role="img"
-      aria-label="Career momentum trend rising over 60 days"
-      preserveAspectRatio="none"
-    >
-      <polyline
-        points={`0,${h} ${points} ${w},${h}`}
-        className="fill-primary/10 stroke-none"
-      />
-      <polyline
-        points={points}
-        className="fill-none stroke-primary"
-        strokeWidth={2}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        vectorEffect="non-scaling-stroke"
-      />
-    </svg>
-  )
-}
-
 export function TodaySection({
   onNavigate,
 }: {
@@ -200,8 +160,8 @@ export function TodaySection({
           Good afternoon, Aisyah.
         </h1>
         <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-          Your career momentum is rising. You are 2 proof gaps away from
-          stronger backend roles.
+          Your next proof action may expand your reach from 12 to 27 matched
+          roles. Two gaps still limit stronger backend opportunities.
         </p>
       </header>
 
@@ -232,25 +192,27 @@ export function TodaySection({
         <Card className={cn('gap-4 p-6 lg:col-span-2', cardHover)}>
           <div className="flex items-center justify-between">
             <span className="text-sm text-muted-foreground">
-              Career Momentum
+              Opportunity reach after top action
             </span>
             <span className="flex size-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
-              <TrendingUp className="size-4" />
+              <Unlock className="size-4" />
             </span>
           </div>
-          <div className="flex items-end gap-2">
-            <span className="text-3xl font-semibold tracking-tight tabular-nums">
-              +14%
-            </span>
-            <SignalBadge tone="success" className="mb-1">
-              <ArrowUpRight />
-              Rising over 60 days
-            </SignalBadge>
+          <div className="flex items-center gap-3">
+            <div className="flex flex-col">
+              <span className="text-3xl font-semibold tracking-tight tabular-nums">12</span>
+              <span className="text-xs text-muted-foreground">reachable now</span>
+            </div>
+            <ArrowRight className="size-5 text-primary" aria-hidden />
+            <div className="flex flex-col">
+              <span className="text-3xl font-semibold tracking-tight text-primary tabular-nums">27</span>
+              <span className="text-xs text-muted-foreground">projected roles</span>
+            </div>
           </div>
-          <MomentumSparkline />
+          <ProgressBar value={44} tone="primary" />
           <p className="text-xs leading-relaxed text-muted-foreground">
-            Based on portfolio updates, saved roles, completed projects, and
-            interview activity.
+            Completing and documenting one Docker deployment may unlock 15 more
+            matched roles. This is a simulated estimate, not a guarantee.
           </p>
         </Card>
       </div>
@@ -310,6 +272,25 @@ export function TodaySection({
               </Button>
             </Card>
           ))}
+        </div>
+      </section>
+
+      <section
+        aria-labelledby="career-impact-lens-heading"
+        className="flex flex-col gap-4 border-y border-border py-5 sm:flex-row sm:items-center sm:justify-between"
+      >
+        <div className="max-w-2xl">
+          <h2 id="career-impact-lens-heading" className="text-sm font-semibold">
+            Career impact lens
+          </h2>
+          <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+            This plan builds transferable skills and expands access to better-quality work;
+            the SDG mapping describes the product outcome, not the employer.
+          </p>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <SdgBadge goal={4} />
+          <SdgBadge goal={8} />
         </div>
       </section>
 
@@ -383,7 +364,7 @@ export function TodaySection({
                 <span className="font-semibold tabular-nums">78 / Strong</span>
               </div>
               <SignalBadge tone="success" className="w-fit">
-                Top 12% of CS candidate profiles
+                Top 12% in the simulated CS demo cohort
               </SignalBadge>
               <SignalBadge tone="warning" className="w-fit">
                 2 gaps left to close

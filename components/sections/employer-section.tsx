@@ -26,6 +26,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { SignalBadge } from '@/components/career/signal-badge'
+import { SdgBadge } from '@/components/career/sdg-badge'
 import { ProgressBar } from '@/components/career/progress'
 import { AskHavenButton, SuggestionChip } from '@/components/career/haven'
 import { SectionHeader } from '@/components/sections/section-header'
@@ -40,11 +41,11 @@ import type { SectionId } from '@/components/shell/nav-config'
 
 const metrics = [
   {
-    label: 'Candidates in pipeline',
-    value: '126',
-    caption: '18 this week',
-    trend: 'up' as const,
-    icon: Users,
+    label: 'Proof-based shortlist',
+    value: '82%',
+    caption: 'work samples reviewed',
+    trend: null,
+    icon: BadgeCheck,
   },
   {
     label: 'Interviews this week',
@@ -120,15 +121,15 @@ export function EmployerSection({
           Ecosystem preview
         </SignalBadge>
         <SectionHeader
-          title="Employer View"
-          subtitle="Hire on trajectory, evidence, and fit — not just keywords."
+          title="Employer Dashboard"
+          subtitle="Hire on trajectory, work samples, and role fit — not keywords alone."
         />
         <div className="flex gap-2.5 rounded-xl border border-border bg-surface p-4">
           <Info className="mt-0.5 size-4 shrink-0 text-primary" />
           <p className="text-sm leading-relaxed text-muted-foreground">
-            Employer View shows how Talentbank partners could use Career OS
+            This dashboard shows how Talentbank partners could use Career OS
             signals to understand candidate readiness, pipeline health, and
-            reason-attached matches.
+            explainable matches.
           </p>
         </div>
       </div>
@@ -165,7 +166,7 @@ export function EmployerSection({
         <div className="flex flex-wrap gap-2">
           <SignalBadge tone="success">
             <BadgeCheck />
-            Candidate evidence-aware
+            Work-sample screening
           </SignalBadge>
           <SignalBadge tone="primary">
             <Compass />
@@ -173,7 +174,7 @@ export function EmployerSection({
           </SignalBadge>
           <SignalBadge tone="primary">
             <Sparkles />
-            Reason-attached recommendations
+            Explainable recommendations
           </SignalBadge>
         </div>
       </Card>
@@ -209,6 +210,25 @@ export function EmployerSection({
           </Card>
         ))}
       </div>
+
+      <section
+        aria-labelledby="fair-hiring-impact-heading"
+        className="flex flex-col gap-4 border-y border-border py-5 sm:flex-row sm:items-center sm:justify-between"
+      >
+        <div className="max-w-2xl">
+          <h2 id="fair-hiring-impact-heading" className="text-sm font-semibold">
+            Fair opportunity lens
+          </h2>
+          <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+            Work-sample signals help recruiters assess demonstrated capability and make
+            screening reasons visible. They support decisions; they do not automate rejection.
+          </p>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <SdgBadge goal={8} />
+          <SdgBadge goal={10} />
+        </div>
+      </section>
 
       {/* Funnel + pipeline health */}
       <div className="grid gap-4 lg:grid-cols-[1.6fr_1fr]">

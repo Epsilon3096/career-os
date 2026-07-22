@@ -5,6 +5,7 @@ import { Compass, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { AuthGate } from '@/components/auth/auth-gate'
 import {
+  demoProfiles,
   SESSION_STORAGE_KEY,
   type CareerSession,
 } from '@/components/auth/session'
@@ -48,6 +49,13 @@ function landingSection(role: DemoRole): SectionId {
   return 'today'
 }
 
+function workspaceRoleForSection(id: SectionId): DemoRole | null {
+  if (id === 'employer') return 'employer'
+  if (id === 'university') return 'university'
+  if (id !== 'home') return 'candidate'
+  return null
+}
+
 export function AppShell() {
   const [active, setActive] = useState<SectionId>('home')
   const [role, setRole] = useState<DemoRole>('candidate')
@@ -58,6 +66,8 @@ export function AppShell() {
 
   const navigate = useCallback((id: SectionId) => {
     setActive(id)
+    const workspaceRole = workspaceRoleForSection(id)
+    if (workspaceRole) setRole(workspaceRole)
     setMenuOpen(false)
     if (typeof window !== 'undefined' && window.location.hash !== `#${id}`) {
       window.location.hash = id
@@ -66,11 +76,16 @@ export function AppShell() {
   }, [])
 
   useEffect(() => {
-    setActive(sectionFromHash())
-    const onHashChange = () => {
-      setActive(sectionFromHash())
+    const syncSectionFromHash = () => {
+      const nextSection = sectionFromHash()
+      setActive(nextSection)
+      const workspaceRole = workspaceRoleForSection(nextSection)
+      if (workspaceRole) setRole(workspaceRole)
       setMenuOpen(false)
     }
+
+    syncSectionFromHash()
+    const onHashChange = () => syncSectionFromHash()
     window.addEventListener('hashchange', onHashChange)
     return () => window.removeEventListener('hashchange', onHashChange)
   }, [])
@@ -86,7 +101,7 @@ export function AppShell() {
       }
       const parsed = JSON.parse(stored) as CareerSession
       setSession(parsed)
-      setRole(parsed.role)
+      setRole(workspaceRoleForSection(sectionFromHash()) ?? parsed.role)
       setRememberSession(Boolean(persistent))
     } catch {
       setSession(null)
@@ -171,10 +186,24 @@ export function AppShell() {
     return <AuthGate onAuthenticated={handleAuthenticated} />
   }
 
+  const previewProfile = demoProfiles.find((profile) => profile.role === role)!
+  const workspaceSession: CareerSession =
+    role === session.role
+      ? session
+      : {
+          ...session,
+          id: `preview-${role}`,
+          email: previewProfile.email,
+          name: previewProfile.name,
+          role,
+          workspace: previewProfile.workspace,
+          caption: previewProfile.caption,
+        }
+
   return (
     <div className="flex min-h-screen bg-background">
       <aside className="fixed inset-y-0 left-0 z-40 hidden w-64 border-r border-sidebar-border bg-sidebar text-sidebar-foreground lg:block">
-        <SidebarNav active={active} session={session} onNavigate={navigate} />
+        <SidebarNav active={active} session={workspaceSession} onNavigate={navigate} />
       </aside>
 
       {menuOpen ? (
@@ -194,7 +223,7 @@ export function AppShell() {
             >
               <X className="size-4" />
             </button>
-            <SidebarNav active={active} session={session} onNavigate={navigate} />
+            <SidebarNav active={active} session={workspaceSession} onNavigate={navigate} />
           </div>
         </div>
       ) : null}
@@ -203,7 +232,7 @@ export function AppShell() {
         <TopBar
           active={active}
           role={role}
-          session={session}
+          session={workspaceSession}
           onRoleChange={handleRoleChange}
           onNavigate={navigate}
           onOpenMenu={() => setMenuOpen(true)}

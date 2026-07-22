@@ -24,22 +24,88 @@ import {
 
 const roles: DemoRole[] = ['candidate', 'employer', 'university']
 
-const notifications = [
-  {
-    icon: CheckCircle2,
-    title: 'Docker proof added to your plan',
-    detail: 'Readiness scenario: +8 points',
-    tone: 'text-success bg-success-muted/60',
-    target: 'today' as const,
-  },
-  {
-    icon: Clock3,
-    title: 'CIMB interview rehearsal is ready',
-    detail: '8 questions · about 20 minutes',
-    tone: 'text-primary bg-primary/10',
-    target: 'haven' as const,
-  },
-]
+type WorkspaceNotification = {
+  icon: typeof CheckCircle2
+  title: string
+  detail: string
+  tone: string
+  target: SectionId
+}
+
+const notificationsByRole: Record<DemoRole, WorkspaceNotification[]> = {
+  candidate: [
+    {
+      icon: CheckCircle2,
+      title: 'Docker proof added to your plan',
+      detail: 'Readiness scenario: +8 points',
+      tone: 'text-success bg-success-muted/60',
+      target: 'today',
+    },
+    {
+      icon: Clock3,
+      title: 'CIMB interview rehearsal is ready',
+      detail: '8 questions · about 20 minutes',
+      tone: 'text-primary bg-primary/10',
+      target: 'haven',
+    },
+  ],
+  employer: [
+    {
+      icon: CheckCircle2,
+      title: 'Three shortlist decisions need review',
+      detail: 'Backend and systems analyst pipelines',
+      tone: 'text-success bg-success-muted/60',
+      target: 'employer',
+    },
+    {
+      icon: Clock3,
+      title: 'Aisyah added deployment evidence',
+      detail: 'Candidate match reasons were refreshed',
+      tone: 'text-primary bg-primary/10',
+      target: 'employer',
+    },
+  ],
+  university: [
+    {
+      icon: CheckCircle2,
+      title: 'Cohort support list is ready',
+      detail: '114 students have actionable risk signals',
+      tone: 'text-success bg-success-muted/60',
+      target: 'university',
+    },
+    {
+      icon: Clock3,
+      title: 'Deployment proof gap is rising',
+      detail: 'New curriculum signal from employer demand',
+      tone: 'text-primary bg-primary/10',
+      target: 'university',
+    },
+  ],
+}
+
+const notificationSummaries: Record<DemoRole, string> = {
+  candidate: '2 updates for your career plan',
+  employer: '2 updates for the hiring pipeline',
+  university: '2 updates for graduate outcomes',
+}
+
+const workspaceActions: Record<
+  DemoRole,
+  { icon: typeof FolderKanban; label: string; target: SectionId }[]
+> = {
+  candidate: [
+    { icon: SlidersHorizontal, label: 'Career priorities', target: 'compass' },
+    { icon: FolderKanban, label: 'Portfolio and proof', target: 'portfolio' },
+  ],
+  employer: [
+    { icon: SlidersHorizontal, label: 'Hiring pipeline', target: 'employer' },
+    { icon: FolderKanban, label: 'Candidate evidence', target: 'employer' },
+  ],
+  university: [
+    { icon: SlidersHorizontal, label: 'Graduate outcomes', target: 'university' },
+    { icon: FolderKanban, label: 'Curriculum signals', target: 'university' },
+  ],
+}
 
 export function TopBar({
   active,
@@ -63,6 +129,7 @@ export function TopBar({
   const [notificationsOpen, setNotificationsOpen] = useState(false)
   const [accountOpen, setAccountOpen] = useState(false)
   const controlsRef = useRef<HTMLDivElement>(null)
+  const notifications = notificationsByRole[role]
 
   useEffect(() => {
     const closeMenus = (event: PointerEvent) => {
@@ -113,7 +180,7 @@ export function TopBar({
       <div ref={controlsRef} className="relative flex items-center gap-1.5 sm:gap-2">
         <div
           role="group"
-          aria-label="Demo workspace switcher"
+          aria-label="Preview workspace"
           className="hidden items-center gap-0.5 rounded-lg border border-border bg-surface p-0.5 xl:flex"
         >
           {roles.map((item) => (
@@ -135,7 +202,7 @@ export function TopBar({
         </div>
 
         <select
-          aria-label="Demo workspace switcher"
+          aria-label="Preview workspace"
           value={role}
           onChange={(event) => onRoleChange(event.target.value as DemoRole)}
           className="hidden h-9 max-w-28 rounded-lg border border-border bg-surface px-2 text-xs font-medium text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none sm:block xl:hidden"
@@ -176,7 +243,9 @@ export function TopBar({
               <div className="flex items-center justify-between border-b border-border px-4 py-3">
                 <div>
                   <p className="text-sm font-semibold">Notifications</p>
-                  <p className="text-[0.68rem] text-muted-foreground">2 updates for your plan</p>
+                  <p className="text-[0.68rem] text-muted-foreground">
+                    {notificationSummaries[role]}
+                  </p>
                 </div>
                 <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[0.68rem] font-medium text-primary">New</span>
               </div>
@@ -243,28 +312,23 @@ export function TopBar({
                 </p>
               </div>
               <div className="p-1.5">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setAccountOpen(false)
-                    onNavigate('compass')
-                  }}
-                  className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-xs font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-                >
-                  <SlidersHorizontal className="size-3.5" />
-                  Career priorities
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setAccountOpen(false)
-                    onNavigate('portfolio')
-                  }}
-                  className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-xs font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-                >
-                  <FolderKanban className="size-3.5" />
-                  Portfolio and proof
-                </button>
+                {workspaceActions[role].map((item) => {
+                  const Icon = item.icon
+                  return (
+                    <button
+                      key={item.label}
+                      type="button"
+                      onClick={() => {
+                        setAccountOpen(false)
+                        onNavigate(item.target)
+                      }}
+                      className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-xs font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                    >
+                      <Icon className="size-3.5" />
+                      {item.label}
+                    </button>
+                  )
+                })}
                 <button
                   type="button"
                   onClick={onSignOut}

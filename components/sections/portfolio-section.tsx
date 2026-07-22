@@ -343,7 +343,7 @@ export function PortfolioSection({
           </span>
           <CircularProgress value={78} label="Strong" />
           <span className="text-xs leading-relaxed text-muted-foreground">
-            Top 12% of CS candidate profiles
+            Top 12% in the simulated CS demo cohort
           </span>
         </Card>
 

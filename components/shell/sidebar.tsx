@@ -5,6 +5,12 @@ import { cn } from '@/lib/utils'
 import type { CareerSession } from '@/components/auth/session'
 import { navGroups, type SectionId } from '@/components/shell/nav-config'
 
+const workspaceMetrics = {
+  candidate: { label: 'Profile strength', value: 78 },
+  employer: { label: 'Pipeline health', value: 78 },
+  university: { label: 'Students on track', value: 74 },
+} as const
+
 export function SidebarNav({
   active,
   session,
@@ -14,6 +20,8 @@ export function SidebarNav({
   session: CareerSession
   onNavigate: (id: SectionId) => void
 }) {
+  const metric = workspaceMetrics[session.role]
+
   return (
     <div className="flex h-full flex-col">
       <div className="flex flex-col gap-1.5 border-b border-sidebar-border px-5 py-5">
@@ -81,11 +89,23 @@ export function SidebarNav({
           </div>
           <p className="mt-2 truncate text-xs font-medium">{session.workspace}</p>
           <div className="mt-3 flex items-center justify-between text-[0.68rem] text-muted-foreground">
-            <span>Profile strength</span>
-            <span className="font-mono tabular-nums text-sidebar-foreground">78%</span>
+            <span>{metric.label}</span>
+            <span className="font-mono tabular-nums text-sidebar-foreground">
+              {metric.value}%
+            </span>
           </div>
-          <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-muted">
-            <div className="h-full w-[78%] rounded-full bg-primary" />
+          <div
+            role="progressbar"
+            aria-label={metric.label}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={metric.value}
+            className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-muted"
+          >
+            <div
+              className="h-full rounded-full bg-primary"
+              style={{ width: `${metric.value}%` }}
+            />
           </div>
         </div>
       </div>

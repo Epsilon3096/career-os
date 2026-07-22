@@ -23,6 +23,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { SignalBadge } from '@/components/career/signal-badge'
+import { SdgBadge } from '@/components/career/sdg-badge'
 import { ProgressBar } from '@/components/career/progress'
 import { AskHavenButton, SuggestionChip } from '@/components/career/haven'
 import { SectionHeader } from '@/components/sections/section-header'
@@ -142,13 +143,13 @@ export function UniversitySection({
           Ecosystem preview
         </SignalBadge>
         <SectionHeader
-          title="University View"
+          title="University Dashboard"
           subtitle="Track graduate outcomes, detect readiness gaps, and align curriculum with live career signals."
         />
         <div className="flex gap-2.5 rounded-xl border border-border bg-surface p-4">
           <Info className="mt-0.5 size-4 shrink-0 text-primary" />
           <p className="text-sm leading-relaxed text-muted-foreground">
-            University View shows how Career OS helps institutions understand
+            This dashboard shows how Career OS helps institutions understand
             employability beyond graduation day.
           </p>
         </div>
@@ -162,7 +163,7 @@ export function UniversitySection({
           </span>
           <div className="flex flex-col gap-1">
             <h2 className="text-lg font-semibold tracking-tight">
-              University of Malaya
+              Universiti Malaya
             </h2>
             <p className="text-sm text-muted-foreground">
               2025 graduate cohort
@@ -225,6 +226,26 @@ export function UniversitySection({
           </Card>
         ))}
       </div>
+
+      <section
+        aria-labelledby="education-impact-heading"
+        className="flex flex-col gap-4 border-y border-border py-5 sm:flex-row sm:items-center sm:justify-between"
+      >
+        <div className="max-w-2xl">
+          <h2 id="education-impact-heading" className="text-sm font-semibold">
+            Education-to-work impact lens
+          </h2>
+          <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+            Cohort signals help institutions target learning support, improve the transition
+            into decent work, and identify unequal outcomes before graduation.
+          </p>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <SdgBadge goal={4} />
+          <SdgBadge goal={8} />
+          <SdgBadge goal={10} />
+        </div>
+      </section>
 
       {/* Employability by faculty */}
       <Card className="gap-5 p-6">

@@ -43,33 +43,33 @@ export const navGroups: NavGroup[] = [
   {
     label: 'Candidate',
     items: [
-      { id: 'today', label: 'Today', icon: Sun },
+      { id: 'today', label: 'Dashboard', icon: Sun },
       { id: 'compass', label: 'Compass', icon: Compass },
-      { id: 'discover', label: 'Discover', icon: Search },
+      { id: 'discover', label: 'Job Listings', icon: Search },
       { id: 'portfolio', label: 'Portfolio', icon: FolderKanban },
       { id: 'haven', label: 'Haven', icon: Sparkles },
-      { id: 'companies', label: 'Companies', icon: Building2 },
+      { id: 'companies', label: 'Company Directory', icon: Building2 },
     ],
   },
   {
     label: 'Ecosystem previews',
     items: [
-      { id: 'employer', label: 'Employer View', icon: Briefcase },
-      { id: 'university', label: 'University View', icon: GraduationCap },
+      { id: 'employer', label: 'Employer Dashboard', icon: Briefcase },
+      { id: 'university', label: 'University Dashboard', icon: GraduationCap },
     ],
   },
 ]
 
 export const sectionTitles: Record<SectionId, string> = {
   home: 'Home',
-  today: 'Today',
+  today: 'Career Dashboard',
   compass: 'Compass',
-  discover: 'Discover',
+  discover: 'Job Listings',
   portfolio: 'Portfolio',
   haven: 'Haven',
-  companies: 'Companies',
-  employer: 'Employer View',
-  university: 'University View',
+  companies: 'Company Directory',
+  employer: 'Employer Dashboard',
+  university: 'University Dashboard',
 }
 
 export const roleConfig: Record<

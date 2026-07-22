@@ -24,19 +24,45 @@ designed to help people answer four practical questions:
 Recommendations explain why they appear, show uncertainty, and connect each
 career goal to concrete proof of skills and next actions.
 
-## Product Highlights
+## Core Impact Loop
 
-- Career dashboard with momentum, readiness, milestones, and priority actions
-- Career priorities check-in that re-ranks paths without personality labels
-- Compass path comparison with salary ranges, effort, risk, gaps, and upside
-- Decision simulator showing how specific actions may expand opportunities
-- Role and company discovery with search, filters, details, and saved items
-- Portfolio workflow for adding work samples and mapping them to career paths
-- Haven career guide with contextual answers and a persistent 30-day plan
-- Employer workspace for reviewing candidate fit and hiring pipeline signals
-- University workspace for graduate outcomes and curriculum insights
-- Demo sign-in, account creation, workspace switching, notifications, and search
-- Responsive dark and light themes with reduced-motion support
+Career OS is organized around four connected decisions:
+
+1. **Priorities** - choose what matters now: income, stability, balance,
+   learning, and people impact.
+2. **Paths** - compare realistic routes by salary, effort, risk, upside, and
+   time-to-role.
+3. **Proof** - connect work samples to each path and identify the few gaps that
+   materially limit opportunity.
+4. **Action** - simulate the effect of a next step and turn it into a focused
+   30-day plan.
+
+The demo follows Aisyah, a data analyst exploring a move into backend
+engineering. It turns a broad goal into three comparable paths, two priority
+proof gaps, 27 potentially reachable roles, and one practical action plan.
+All figures are dummy data and simulated outcomes.
+
+## Product Experiences
+
+- **Homepage** - communicates the career impact loop and provides direct entry
+  into the dashboard and matched jobs.
+- **Career Dashboard** - summarizes readiness, opportunity reach, priority
+  actions, relevant roles, portfolio strength, and the next career decision.
+- **Job Listings** - connects every role to a chosen path, current work samples,
+  missing proof, salary range, and a reason for the match.
+- **Company Directory** - supports search and filtering by sector, location,
+  graduate friendliness, and relevant career path.
+- **Compass** - compares career routes and simulates how specific actions may
+  change readiness, salary range, and reachable roles.
+- **Portfolio** - converts projects and outcomes into reusable career proof.
+- **Employer Dashboard** - summarizes hiring pipeline health and explainable,
+  work-sample-based candidate fit.
+- **University Dashboard** - connects graduate outcomes, at-risk signals,
+  curriculum gaps, and employer demand.
+
+Supporting interactions include demo sign-in, account creation, workspace
+switching, notifications, command search, saved items, responsive dark and
+light themes, and reduced-motion support.
 
 ## Career Assessment Decision
 
@@ -53,6 +79,27 @@ Instead, the Compass workspace uses a career priorities check-in covering:
 - People impact
 
 These priorities are adjustable and directly influence path recommendations.
+
+## Sustainability Mapping
+
+Sustainability is integrated as an impact lens rather than a separate module:
+
+- **SDG 4 - Quality Education:** lifelong learning and targeted skill
+  development.
+- **SDG 8 - Decent Work and Economic Growth:** clearer routes into better-fit,
+  higher-quality work.
+- **SDG 10 - Reduced Inequalities:** work-sample and capability signals that can
+  reduce reliance on pedigree alone.
+
+The mapping describes intended product outcomes. It does not claim that a role
+or employer is sustainable without supporting data.
+
+## AI and Data Scope
+
+Haven demonstrates concept-only AI recommendations through deterministic,
+contextual simulations. The project does not call an external AI API, consume
+tokens, or train a custom model. Market, salary, candidate, employer, and
+university data are all dummy data for this phase.
 
 ## Demo Data and Authentication
 
@@ -143,7 +190,7 @@ public/               Public assets and social preview
 - Avoid pretending that career outcomes can be predicted with certainty.
 - Keep users in control of their priorities and career direction.
 
-## Suggested Next Phase
+## Suggested Production Phase
 
 - Add production authentication and server-side authorization
 - Store profiles, plans, and portfolio records in a real database

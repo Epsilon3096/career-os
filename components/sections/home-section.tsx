@@ -4,24 +4,55 @@ import {
   ArrowRight,
   Briefcase,
   Building2,
+  Compass,
+  FolderCheck,
   GraduationCap,
+  ListChecks,
+  Search,
   ShieldCheck,
+  SlidersHorizontal,
   UserRound,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Reveal } from '@/components/ui/reveal'
 import { SignalBadge } from '@/components/career/signal-badge'
-import { CountUp } from '@/components/landing/count-up'
-import { EmployerMarquee } from '@/components/landing/employer-marquee'
+import { SdgBadge } from '@/components/career/sdg-badge'
 import { CareerArc } from '@/components/landing/career-arc'
 import type { SectionId } from '@/components/shell/nav-config'
 
 const stats = [
-  { value: 595, suffix: '+', label: 'Companies modeled' },
-  { value: 18443, suffix: '+', label: 'Role signals indexed' },
-  { value: 34, suffix: '', label: 'Career sectors' },
-  { value: 1, suffix: '', label: 'Connected career profile' },
+  { value: '3', label: 'realistic paths compared' },
+  { value: '27', label: 'roles within reach' },
+  { value: '2', label: 'proof gaps identified' },
+  { value: '30 days', label: 'in one focused action plan' },
+]
+
+const impactLoop = [
+  {
+    icon: SlidersHorizontal,
+    step: '01',
+    title: 'Priorities',
+    description: 'Set what matters now: income, stability, balance, learning, and impact.',
+  },
+  {
+    icon: Compass,
+    step: '02',
+    title: 'Paths',
+    description: 'Compare realistic routes with salary, effort, risk, and time-to-role.',
+  },
+  {
+    icon: FolderCheck,
+    step: '03',
+    title: 'Proof',
+    description: 'See which work samples support each path and which gaps still matter.',
+  },
+  {
+    icon: ListChecks,
+    step: '04',
+    title: 'Action',
+    description: 'Turn the highest-value gap into a practical next step and track progress.',
+  },
 ]
 
 const ecosystem = [
@@ -30,7 +61,7 @@ const ecosystem = [
     title: 'Candidate',
     description:
       'A daily career command center built around one lifelong profile.',
-    items: ['Today', 'Compass', 'Discover', 'Portfolio', 'Haven'],
+    items: ['Dashboard', 'Compass', 'Job listings', 'Portfolio', 'Haven'],
   },
   {
     icon: Briefcase,
@@ -73,7 +104,7 @@ const demoEntries: {
   },
   {
     icon: Briefcase,
-    title: 'Preview Employer View',
+    title: 'Preview Employer Dashboard',
     description:
       'See how CIMB’s talent team reviews reason-attached matches and pipeline health.',
     cta: 'Preview Employer',
@@ -81,7 +112,7 @@ const demoEntries: {
   },
   {
     icon: Building2,
-    title: 'Preview University View',
+    title: 'Preview University Dashboard',
     description:
       'See how Universiti Malaya tracks graduate outcomes and curriculum signals.',
     cta: 'Preview University',
@@ -116,9 +147,10 @@ export function HomeSection({
           <Button
             size="lg"
             variant="outline"
-            onClick={() => onNavigate('employer')}
+            onClick={() => onNavigate('discover')}
           >
-            Preview employer tools
+            <Search data-icon="inline-start" />
+            Browse matched jobs
           </Button>
         </div>
         <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
@@ -126,6 +158,39 @@ export function HomeSection({
           Recommendations explain their reasoning and uncertainty.
         </span>
       </section>
+
+      {/* Impact loop */}
+      <Reveal>
+        <section aria-labelledby="impact-loop-heading" className="flex flex-col gap-6">
+          <div className="flex flex-col gap-1">
+            <h2 id="impact-loop-heading" className="text-lg font-semibold tracking-tight">
+              From uncertainty to a defensible next move
+            </h2>
+            <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">
+              Career OS connects four decisions that are usually scattered across job boards,
+              assessments, portfolios, and career advice.
+            </p>
+          </div>
+          <div className="grid gap-px overflow-hidden rounded-xl border border-border bg-border md:grid-cols-4">
+            {impactLoop.map((item) => (
+              <div key={item.step} className="flex min-h-48 flex-col gap-4 bg-card p-5 sm:p-6">
+                <div className="flex items-center justify-between">
+                  <span className="flex size-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                    <item.icon className="size-4.5" />
+                  </span>
+                  <span className="font-mono text-xs text-muted-foreground">{item.step}</span>
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <h3 className="text-sm font-semibold">{item.title}</h3>
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    {item.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      </Reveal>
 
       {/* Career arc */}
       <Reveal>
@@ -136,14 +201,25 @@ export function HomeSection({
         </section>
       </Reveal>
 
-      {/* Stats */}
+      {/* Demonstrated outcome */}
       <Reveal>
-        <section aria-label="Demo market model statistics">
+        <section aria-labelledby="demo-outcome-heading" className="flex flex-col gap-4">
+          <div className="flex flex-wrap items-end justify-between gap-3">
+            <div className="flex flex-col gap-1">
+              <h2 id="demo-outcome-heading" className="text-lg font-semibold tracking-tight">
+                What the demo changes for Aisyah
+              </h2>
+              <p className="text-sm text-muted-foreground">
+                From a broad career question to a measurable, simulated action plan.
+              </p>
+            </div>
+            <SignalBadge tone="neutral">Dummy data · simulated outcomes</SignalBadge>
+          </div>
           <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
             {stats.map((s) => (
               <Card key={s.label} className="items-start gap-1 p-5 sm:p-6">
                 <span className="text-3xl font-semibold tracking-tight sm:text-4xl">
-                  <CountUp value={s.value} suffix={s.suffix} />
+                  {s.value}
                 </span>
                 <span className="text-sm text-muted-foreground">{s.label}</span>
               </Card>
@@ -152,13 +228,26 @@ export function HomeSection({
         </section>
       </Reveal>
 
-      {/* Employer marquee */}
+      {/* Sustainable impact */}
       <Reveal>
-        <section aria-label="Employers" className="flex flex-col gap-5">
-          <p className="text-center text-xs font-medium tracking-wide text-muted-foreground uppercase">
-            Example employers represented in the demo dataset
-          </p>
-          <EmployerMarquee />
+        <section
+          aria-labelledby="sustainable-impact-heading"
+          className="flex flex-col gap-4 border-y border-border py-6 sm:flex-row sm:items-center sm:justify-between"
+        >
+          <div className="max-w-2xl">
+            <h2 id="sustainable-impact-heading" className="text-base font-semibold">
+              Better career decisions are a sustainability outcome
+            </h2>
+            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+              The product supports lifelong learning, access to decent work, and fairer
+              opportunity by connecting skills to explainable actions instead of pedigree alone.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <SdgBadge goal={4} />
+            <SdgBadge goal={8} />
+            <SdgBadge goal={10} />
+          </div>
         </section>
       </Reveal>
 

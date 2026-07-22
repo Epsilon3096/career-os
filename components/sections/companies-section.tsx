@@ -225,7 +225,7 @@ export function CompaniesSection({
       {/* Header */}
       <div className="flex flex-col gap-4">
         <SectionHeader
-          title="Companies"
+          title="Company Directory"
           subtitle="Explore employers through career paths, role signals, salary bands, and what they tend to hire for."
         />
         <div className="flex gap-2.5 rounded-xl border border-border bg-surface px-4 py-3">

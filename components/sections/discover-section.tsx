@@ -223,13 +223,13 @@ export function DiscoverSection({
       {/* Header */}
       <div className="flex flex-col gap-4">
         <SectionHeader
-          title="Discover"
+          title="Job Listings"
           subtitle="Roles matched to your Compass paths, portfolio proof, and current market signals."
         />
         <div className="flex gap-2.5 rounded-xl border border-border bg-surface px-4 py-3">
           <Info className="mt-0.5 size-4 shrink-0 text-primary" />
           <p className="text-sm leading-relaxed text-muted-foreground">
-            Discover is not a generic job board. Each role is connected to a
+            These are not generic job listings. Each role is connected to a
             trajectory, missing proof gap, or saved career goal.
           </p>
         </div>
@@ -404,7 +404,7 @@ export function DiscoverSection({
         </div>
         <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">
           Backend roles appear most often because your current skills and work samples already
-          supports SQL, scripting, and structured project delivery. Docker
+          support SQL, scripting, and structured project delivery. Docker
           proof is the highest-impact gap this week.
         </p>
         <div className="flex flex-wrap gap-2">
